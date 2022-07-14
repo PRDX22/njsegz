@@ -1,4 +1,4 @@
-cd;
+const USER_DATA = localStorage.getItem('userData');
 
 const fetchWord = async () => {
 	try {

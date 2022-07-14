@@ -11,11 +11,14 @@ const accSchema = joi.object({
   user_id: joi.number().required(),
 });
 
-router.get('/', isLoggedIn, async (req, res) => {
+router.get('/?', isLoggedIn, async (req, res) => {
+  const { userId } = req.query;
   try {
     const connection = await mysql.createConnection(DB_CONFIG);
-    const [rows] = await connection.query(`SELECT user_id FROM accounts
-    JOIN njsegz.groups ON accounts.group_id=users.id`);
+    const [rows] = await connection.query(`SELECT *
+    FROM ((accounts
+    JOIN njsegz.groups ON accounts.group_id = njsegz.groups.id)
+    JOIN users ON accounts.user_id = users.id) WHERE user_id="${userId}"`);
 
     await connection.end();
     return res.json(rows);
