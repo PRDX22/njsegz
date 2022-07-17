@@ -72,13 +72,6 @@ router.post('/login', async (req, res) => {
         .status(400)
         .json({ status: 'Bad Request!', error: 'Password is incorrect!' });
     }
-    // const token = jwt.sign(
-    //   {
-    //     id: user[0].id,
-    //   },
-    //   process.env.JWT_SECRET,
-    //   1,
-    // );
     const token = jwt.sign(
       {
         id: user[0].id,

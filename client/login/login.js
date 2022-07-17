@@ -16,19 +16,21 @@ const getUser = async (data) => {
 
 document.querySelector('form').addEventListener('submit', async (event) => {
 	event.preventDefault();
+	localStorage.clear();
 	const data = {
 		email: event.target.elements.email.value,
 		password: event.target.elements.password.value,
 	};
 	if (!data.email || !data.password) return;
+
 	const { token, user } = await getUser(data);
 	if (token) {
 		localStorage.setItem(
 			'userData',
 			JSON.stringify({ token: token, user })
 		);
-		// location.replace('../game/game.html');
+		location.replace('../groups/groups.html');
 	} else {
-		alert('Login failed!');
+		alert('Email or password is incorrect !');
 	}
 });

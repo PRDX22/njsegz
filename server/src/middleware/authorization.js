@@ -14,9 +14,3 @@ const isLoggedIn = (req, res, next) => {
 };
 
 module.exports = isLoggedIn;
-
-// fetch('', {
-//     headers: {
-//         Authorization: 'Bearer asgasgasgasgasgsagasg'
-//     }
-// })
