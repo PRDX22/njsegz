@@ -2,20 +2,63 @@ const output = document.querySelector('#output');
 const USER_DATA = localStorage.getItem('userData');
 const userId = JSON.parse(USER_DATA).user.id;
 
-const allGroups = async () => {
+// // ALL GROUPS button - not wotking for now :)
+// const allGroups = async () => {
+// 	try {
+// 		const response = await fetch('http://localhost:8080/api/groups', {
+// 			headers: {
+// 				Authorization: `Bearer ${JSON.parse(USER_DATA).token}`,
+// 				'Content-Type': 'application/json',
+// 			},
+// 		});
+// 		return await response.json();
+// 	} catch (err) {
+// 		location.replace('../login/login.html');
+// 		console.log(err);
+// 	}
+// };
+// document
+// 	.getElementById('allGroups')
+// 	.addEventListener('click', async (event) => {
+// 		event.preventDefault();
+// 		const allGroupsFetch = async () => {
+// 			const data = await allGroups();
+// 			displayGroup(data);
+// 		};
+// 		allGroupsFetch();
+// 		// location.reload();
+// 	});
+
+//------------------------------------------------------------------------------------
+// ADD group to a logged user --------------------------------------------------------------
+const addGroup = async (data) => {
 	try {
-		const response = await fetch('http://localhost:8080/api/groups', {
+		const response = await fetch('http://localhost:8080/api/accounts', {
+			method: 'POST',
+			body: JSON.stringify(data),
 			headers: {
 				Authorization: `Bearer ${JSON.parse(USER_DATA).token}`,
+				'Content-Type': 'application/json',
 			},
 		});
-		return await response.json();
+		const user = await response.json();
+		return user;
 	} catch (err) {
-		location.replace('../login/login.html');
 		console.log(err);
 	}
 };
 
+document.querySelector('form').addEventListener('submit', async (event) => {
+	event.preventDefault();
+	const data = {
+		group_id: event.target.elements.groupId.value,
+	};
+	await addGroup(data);
+	location.reload();
+});
+//-------------------------------------------------------------------------------------
+
+// first page show groups that belong to logged user
 const userGroups = async () => {
 	try {
 		const response = await fetch(
@@ -32,7 +75,6 @@ const userGroups = async () => {
 		console.log(err);
 	}
 };
-
 function displayGroup(group) {
 	group.forEach((element) => {
 		const div = document.createElement('div');
@@ -42,21 +84,14 @@ function displayGroup(group) {
 		name.textContent = `${element.name}`;
 		div.append(id, name);
 		output.append(div);
-		// cia bus nukreipimas i vidu grupes su FETCH pagalba (neturiu dar route pruosto)
-		// output.addEventListener('click', async () => {
-		// 	const data = await deleteProd(el.id);
-		// 	console.log(data);
-		// 	// console.log(el);
-		// 	if (data.msg) {
-		// 		div.remove();
-		// 		alert('Produktas istrintas.');
-		// 	} else {
-		// 		alert('Kortelė neistrinta. Klaida');
-		// 	}
-		// });
+		// issaugom on click localstorage group_id
+		div.addEventListener('click', async () => {
+			localStorage.removeItem('groupId');
+			localStorage.setItem('groupId', element.group_id);
+			location.replace('../bills/bills.html');
+		});
 	});
 }
-
 const main = async () => {
 	const data = await userGroups();
 	displayGroup(data);

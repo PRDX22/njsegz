@@ -17,6 +17,9 @@ header {
 	height: 100%;
 	background-color: rosybrown;
 }
+h1 {
+	margin-top: 10rem;
+}
 .button-container {
 	width: auto;
 	margin-left: 5rem;
@@ -44,6 +47,13 @@ header {
 }
 #output div h2 {
 	right: inherit;
+}
+table {
+	border: 1px solid rgb(199, 199, 199);
+	margin: 0.25rem;
+	align-items: center;
+	width: 20rem;
+	text-align: center;
 }
 
 #allGroups {

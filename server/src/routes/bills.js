@@ -8,16 +8,18 @@ const router = express.Router();
 
 const accSchema = joi.object({
   group_id: joi.number().required(),
+  amount: joi.number().required(),
+  description: joi.string().required(),
 });
 
-router.get('/?', isLoggedIn, async (req, res) => {
-  const { userId } = req.query;
+router.get('/:group_id', isLoggedIn, async (req, res) => {
+  const { group_id: groupId } = req.params;
   try {
     const connection = await mysql.createConnection(DB_CONFIG);
-    const [rows] = await connection.query(`SELECT *
-    FROM ((accounts
-    JOIN njsegz.groups ON accounts.group_id = njsegz.groups.id)
-    JOIN users ON accounts.user_id = users.id) WHERE user_id="${userId}"`);
+    const [rows] = await connection.query(
+      'SELECT * FROM bills WHERE group_id=?',
+      [groupId],
+    );
 
     await connection.end();
     return res.json(rows);
@@ -27,17 +29,18 @@ router.get('/?', isLoggedIn, async (req, res) => {
 });
 
 router.post('/', isLoggedIn, async (req, res) => {
-  const { group_id: groupId } = req.body;
+  const { group_id: groupId, amount, description } = req.body;
   try {
-    await accSchema.validateAsync({ group_id: groupId });
+    await accSchema.validateAsync({ group_id: groupId, amount, description });
   } catch (err) {
     return res.status(400).json(err);
   }
   try {
     const connection = await mysql.createConnection(DB_CONFIG);
-    const [response] = await connection.query('INSERT INTO accounts SET ?', {
-      user_id: req.userId,
+    const [response] = await connection.query('INSERT INTO bills SET ?', {
       group_id: groupId,
+      amount,
+      description,
     });
     await connection.end();
     return res.json(response);

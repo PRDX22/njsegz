@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<script src="./bills.js" defer></script>
+		<link rel="stylesheet" type="text/css" href="../styles/style.css" />
+	</head>
+	<body>
+		<header><div class="header">Group bills</div></header>
+        <div id="table-center">
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Description</th>
+                    <th>Amount</th>
+                </tr>
+            </table>
+        </div>
+        <div id="table-center"><table class="tableOutput"></table></div>
+    </div>
+		<div id="output"></div>
+		<div class="container">
+			<div class="form-container">
+				<h1>Add bill to group</h1>
+				<form>
+					<label for="amount">Amount:</label>
+
+					<input type="number" name="amount" id="amount" />
+					<label for="Description">Description:</label>
+					<input type="text" name="description" id="description" />
+					<div class="btn-container">
+						<button type="submit" id="addBill">Add</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</body>
+</html>
