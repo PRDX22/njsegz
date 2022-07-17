@@ -18,7 +18,6 @@ router.get('/?', isLoggedIn, async (req, res) => {
     FROM ((accounts
     JOIN njsegz.groups ON accounts.group_id = njsegz.groups.id)
     JOIN users ON accounts.user_id = users.id) WHERE user_id="${userId}"`);
-
     await connection.end();
     return res.json(rows);
   } catch (err) {

@@ -1,5 +1,3 @@
-// const { password } = require('../../server/src/middleware/config');
-
 const createUser = async (data) => {
 	try {
 		const response = await fetch('http://localhost:8080/api/register', {

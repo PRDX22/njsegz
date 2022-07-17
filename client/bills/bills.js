@@ -70,3 +70,7 @@ document.querySelector('form').addEventListener('submit', async (event) => {
 	location.reload();
 });
 //-------------------------------------------------------------------------------------
+//back to groups
+document.getElementById('backToGroups').addEventListener('click', (event) => {
+	location.replace('../groups/groups.html');
+});

@@ -2,34 +2,6 @@ const output = document.querySelector('#output');
 const USER_DATA = localStorage.getItem('userData');
 const userId = JSON.parse(USER_DATA).user.id;
 
-// // ALL GROUPS button - not wotking for now :)
-// const allGroups = async () => {
-// 	try {
-// 		const response = await fetch('http://localhost:8080/api/groups', {
-// 			headers: {
-// 				Authorization: `Bearer ${JSON.parse(USER_DATA).token}`,
-// 				'Content-Type': 'application/json',
-// 			},
-// 		});
-// 		return await response.json();
-// 	} catch (err) {
-// 		location.replace('../login/login.html');
-// 		console.log(err);
-// 	}
-// };
-// document
-// 	.getElementById('allGroups')
-// 	.addEventListener('click', async (event) => {
-// 		event.preventDefault();
-// 		const allGroupsFetch = async () => {
-// 			const data = await allGroups();
-// 			displayGroup(data);
-// 		};
-// 		allGroupsFetch();
-// 		// location.reload();
-// 	});
-
-//------------------------------------------------------------------------------------
 // ADD group to a logged user --------------------------------------------------------------
 const addGroup = async (data) => {
 	try {
@@ -97,3 +69,8 @@ const main = async () => {
 	displayGroup(data);
 };
 main();
+
+//--- Mygroups button
+document.getElementById('myGroups').addEventListener('click', async (event) => {
+	location.replace('../groups/groups.html');
+});
